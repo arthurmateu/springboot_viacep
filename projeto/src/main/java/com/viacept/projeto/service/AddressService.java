@@ -43,11 +43,11 @@ public class AddressService {
 
 
     public AddressDTO update(AddressDTO addressDTO) {
-        repository.save(mapper.map(addressDTO, Address.class));
-        return null;
+        var updatedAddress= repository.save(mapper.map(addressDTO, Address.class));
+        return mapper.map(updatedAddress, AddressDTO.class);
     }
 
-    public void delete(String cep) {
+    public void deleteByCep(String cep) {
         repository.deleteById(cep);
     }
 }

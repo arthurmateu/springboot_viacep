@@ -26,8 +26,8 @@ class ProjetoApplicationTests {
 
 	@Test
 	void deleteTest(){
-		addressService.delete("13090-660");
-		addressService.delete("13058-014");
+		addressService.deleteByCep("13090-660");
+		addressService.deleteByCep("13058-014");
 	}
 
 }
