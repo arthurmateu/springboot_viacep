@@ -6,13 +6,15 @@ import com.viacept.projeto.model.Address;
 import com.viacept.projeto.repository.AddressRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class AddressService{
+public class AddressService {
+
+    @Autowired
+    private ModelMapper mapper;
 
     @Autowired
     private AddressRepository repository;
@@ -20,41 +22,32 @@ public class AddressService{
     @Autowired
     private ViacepClient client;
 
-    public AddressDTO createByCep(String cep){
-        ModelMapper mapper = new ModelMapper();
+    public AddressDTO createByCep(String cep) {
         AddressDTO addressByCep = client.findAddressByCep(cep);
         var saved = repository.save(mapper.map(addressByCep, Address.class));
-        System.out.println(saved);
         return mapper.map(saved, AddressDTO.class);
     }
 
-    // Create
-    public AddressDTO create(AddressDTO addressDTO){
+//    public AddressDTO create(AddressDTO addressDTO) {
+//        var saved = repository.save(mapper.map(addressDTO, Address.class));
+//        return mapper.map(saved, AddressDTO.class);
+//    }
 
+    public List<AddressDTO> findAll() {
+        return repository.findAll().stream().map(address -> mapper.map(address, AddressDTO.class)).toList();
+    }
+
+    public AddressDTO findByCep(String cep) {
+        return mapper.map(repository.findById(cep).orElseThrow(() -> new RuntimeException("Address not found")), AddressDTO.class);
+    }
+
+
+    public AddressDTO update(AddressDTO addressDTO) {
+        repository.save(mapper.map(addressDTO, Address.class));
         return null;
     }
 
-    // Get
-        // All
-        public List<AddressDTO> findAll(){
-
-            return null;
-        }
-        // By Id
-        public AddressDTO findByCep(String cep){
-
-            return null;
-        }
-
-
-    // Update
-    public AddressDTO update(String cep, AddressDTO addressDTO){
-
-        return null;
-    }
-
-    // Delete
-    public void delete(String cep){
-
+    public void delete(String cep) {
+        repository.deleteById(cep);
     }
 }
