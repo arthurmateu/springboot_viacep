@@ -13,8 +13,8 @@ public class AddressController {
     @Autowired
     private AddressService service;
 
-    @PostMapping("/create/{cep}")
-    public ResponseEntity<?> createByCep(@Valid @PathVariable("cep") String cep){
+    @PostMapping("/{cep}")
+    public ResponseEntity<?> createByCep(@PathVariable("cep") String cep){
         return ResponseEntity.ok(service.createByCep(cep));
     }
 
@@ -23,18 +23,18 @@ public class AddressController {
         return ResponseEntity.ok(service.findAll());
     }
 
-    @GetMapping("/find/{cep}")
-    public ResponseEntity<?> findByCep(@Valid @PathVariable("cep") String cep){
+    @GetMapping("/{cep}")
+    public ResponseEntity<?> findByCep(@PathVariable("cep") String cep){
         return ResponseEntity.ok(service.findByCep(cep));
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<?> updateByCep(@RequestBody AddressDTO dto){
+    @PutMapping
+    public ResponseEntity<?> update(@RequestBody AddressDTO dto){
         return ResponseEntity.ok(service.update(dto));
     }
 
-    @DeleteMapping("/delete/{cep}")
-    public ResponseEntity deleteByCep(@Valid @PathVariable("cep") String cep){
+    @DeleteMapping("/{cep}")
+    public ResponseEntity<?> deleteByCep(@PathVariable("cep") String cep){
         service.deleteByCep(cep);
         return ResponseEntity.ok("CEP deleted");
     }

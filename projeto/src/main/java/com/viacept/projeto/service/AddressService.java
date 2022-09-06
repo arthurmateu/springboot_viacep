@@ -6,6 +6,7 @@ import com.viacept.projeto.model.Address;
 import com.viacept.projeto.repository.AddressRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,4 +51,20 @@ public class AddressService {
     public void deleteByCep(String cep) {
         repository.deleteById(cep);
     }
+
+    // vvv Populates Database vvv
+
+//    @Bean
+//    public void populateDatabase(){
+//        for(int i = 13090560; i<13090660; i++){
+//            try{
+//                var dto = client.findAddressByCep(Integer.toString(i));
+//                repository.save(mapper.map(dto, Address.class));
+//            }
+//            catch(Exception e){
+//                System.out.println("Nao deu");
+//            }
+//        }
+//        System.out.println("Rodou");
+//    }
 }
